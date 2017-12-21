@@ -15,16 +15,12 @@ let selectWord=()=>{
 	console.log(wordsArray)
 	// Generate and track number of guesses
 	// put relevant values into game array
-	game.remainingGuesses = (selectWord.legnth*0.5);
+	game.numberOfGuesses = (selectWord.length*2);
 	game.selectWord = selectWord;
-	game.remainingLetters = selectWord.legnth;
-	//imput prompt up and running
-	let guess = prompt("whatcha got?","")
-	let guessed = new Letter(guess)
+	game.remainingLetters = selectWord.length;
 
 }
-
-// an obj for storing var
+// an obj for storing game var
 
 let game = {
 	numberOfGuesses:0,
@@ -34,20 +30,36 @@ let game = {
 	guessedLetters: []
 }
 
+
 // a class for doing stuff with the imput 
 
 class Letter {
   constructor(guess) {
+  		this.guess = guess
   		console.log(guess)
+  		console.log(game)
+  		// loop to check to see if the letter is in the selected word
+  		for(let i=0;i<game.selectWord.length;i++){
+  			if(game.selectWord[i]==guess){
+	  			let guess = prompt("hell yes! you have "+game.numberOfGuesses+" guesses left","")
+				let guessed = new Letter(guess)
+  			}else{
+  				 prompt("you suck and that's sad. "+game.numberOfGuesses+" guesses left","")
+  			}
+  		}
+
 	}
   }
 
-
-
-
+humanInterface=()=>{
+		//imput prompt up and running
+	let guess = prompt("whatcha got?","")
+	let guessed = new Letter(guess)
+}
 
 selectWord()
 
+humanInterface()
 
 
 
