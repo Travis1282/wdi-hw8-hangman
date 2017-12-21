@@ -15,7 +15,7 @@ let selectWord=()=>{
 	console.log(wordsArray)
 	// Generate and track number of guesses
 	// put relevant values into game array
-	game.numberOfGuesses = (selectWord.length*2);
+	game.remainingGuesses = (selectWord.length+5);
 	game.selectWord = selectWord;
 	game.remainingLetters = selectWord.length;
 
@@ -23,7 +23,7 @@ let selectWord=()=>{
 // an obj for storing game var
 
 let game = {
-	numberOfGuesses:0,
+	numberOfGuesses:0,/// this does nothing. 
 	remainingGuesses:0,
 	selectWord:[],
 	remainingLetters:0,
@@ -35,16 +35,20 @@ let game = {
 
 class Letter {
   constructor(guess) {
-  		this.guess = guess
-  		console.log(guess)
-  		console.log(game)
+  		this.guess = guess;
+  		game.guessedLetters.push(guess);
+  		console.log(game);
   		// loop to check to see if the letter is in the selected word
   		for(let i=0;i<game.selectWord.length;i++){
-  			if(game.selectWord[i]==guess){
-	  			let guess = prompt("hell yes! you have "+game.numberOfGuesses+" guesses left","")
-				let guessed = new Letter(guess)
+  			if(game.selectWord[i]==guess && game.remainingGuesses > 0){
+  				
+  				// prompt for next letter
+	  			let guess = prompt("hell yes! you have "+game.remainingGuesses+" guesses left. you have alreay guessed: "+game.guessedLetters,"");
+				let guessed = new Letter(guess);
   			}else{
-  				 prompt("you suck and that's sad. "+game.numberOfGuesses+" guesses left","")
+  				 prompt("you suck and that's sad. "+game.remainingGuesses+" guesses left. you have alreay guessed: "+game.guessedLetters,"");
+  				 let guessed = new Letter(guess);
+
   			}
   		}
 
@@ -53,7 +57,7 @@ class Letter {
 
 humanInterface=()=>{
 		//imput prompt up and running
-	let guess = prompt("whatcha got?","")
+	let guess = prompt("annoying as shit! you can't do a dam thing untill you try and guess this "+game.selectWord.length+" letter word","")
 	let guessed = new Letter(guess)
 }
 
