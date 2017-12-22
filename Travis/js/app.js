@@ -1,5 +1,5 @@
 
-let wordsArray=["recumbentplay","permeable", "lothario","terpsichorean","fructify","gravamen"]
+let wordsArray=["recumbent","permeable", "lothario","terpsichorean","fructify","gravamen"]
 
 
 
@@ -27,7 +27,9 @@ let game = {
 	remainingGuesses:0,
 	selectWord:[],
 	remainingLetters:0,
-	guessedLetters: []
+	guessedLetters: [],
+	blankSpaces:[]
+	//need a game board that is underscores that updates with letters 
 }
 
 
@@ -37,35 +39,46 @@ class Letter {
   constructor(guess) {
   		this.guess = guess;
   		game.guessedLetters.push(guess);
+  		game.remainingGuesses--
   		console.log(game);
   		// loop to check to see if the letter is in the selected word
   		for(let i=0;i<game.selectWord.length;i++){
+  			//lets use this oppurtunity to fill our a blank spaces var
+  				game.blankSpaces[i]='_'; 
   			if(game.selectWord[i]==guess && game.remainingGuesses > 0){
-  				
+  				// insert the letter in the spot it belongs
+  				game.blankSpaces[i]=guess
   				// prompt for next letter
-	  			let guess = prompt("hell yes! you have "+game.remainingGuesses+" guesses left. you have alreay guessed: "+game.guessedLetters,"");
+	  			let guess = prompt("hell yes! you have "+game.remainingGuesses+" guesses left. you have alreay guessed: "+game.guessedLetters+", spaces: "+game.blankSpaces);
 				let guessed = new Letter(guess);
-  			}else{
-  				 prompt("you suck and that's sad. "+game.remainingGuesses+" guesses left. you have alreay guessed: "+game.guessedLetters,"");
+
+				//was getting stuck in else need a new condition
+  			}else if(game.remainingGuesses > 0){
+  				 let guess = prompt("you suck and that's sad. "+game.remainingGuesses+" guesses left. you have alreay guessed: "+game.guessedLetters+", spaces: "+game.blankSpaces);
   				 let guessed = new Letter(guess);
 
+  			 }else {alert("you lose ya little bitch. the word was "+game.selectWord+" ...clearly");
+  			 			//reset values
+							game.remainingGuesses=0;
+							game.selectWord=[];
+							game.remainingLetters=0;
+							game.guessedLetters=[];
+							game.blankSpaces='';
   			}
   		}
-
 	}
-  }
+}
 
-humanInterface=()=>{
+humanInterface=(guess)=>{
 		//imput prompt up and running
-	let guess = prompt("annoying as shit! you can't do a dam thing untill you try and guess this "+game.selectWord.length+" letter word","")
+	 prompt("annoying as shit! you can't do a dam thing untill you try and guess this "+game.selectWord.length+" letter word","")
 	let guessed = new Letter(guess)
 }
 
 selectWord()
-
 humanInterface()
 
-
+console.log(blankSpaces)
 
 
 
